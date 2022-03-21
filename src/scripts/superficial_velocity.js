@@ -1,7 +1,7 @@
 const solve = require("quadratic-equations-solver");
 
 
-function superficial_velocity(pressure_drop, diameter, porosity, viscosity, density, reynolds_number) {
+function superficial_velocity(pressure_drop, diameter, porosity, viscosity, density) {
     
     const A = 1.75;
     const B = (150 * (1-porosity) * viscosity) / (density * diameter);

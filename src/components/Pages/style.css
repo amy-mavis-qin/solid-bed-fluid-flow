@@ -44,9 +44,10 @@
 }
 
 .label {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Bree Serif', serif;
     color: white;
     display: inline-block;
+    letter-spacing: 1px;
 }
 
 .slider {
