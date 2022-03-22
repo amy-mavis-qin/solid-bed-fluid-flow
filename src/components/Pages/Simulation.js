@@ -57,7 +57,7 @@ export default function Simulation() {
                 </div>
             </div>
             <div className="main">
-                <Canvas className="canvas" radius={packing_diameter} velocity={velocity}></Canvas>
+                <Canvas className="canvas" diameter={packing_diameter} velocity={velocity}></Canvas>
             </div>
         </div>
     )    
