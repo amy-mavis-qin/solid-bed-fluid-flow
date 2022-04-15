@@ -1,7 +1,7 @@
 import React, { useRef, useState, Component } from 'react';
 import './style.css';
-import Canvas from './Canvas.js';
-import { superficial_velocity } from '../../scripts/superficial_velocity.js';
+import { Canvas } from '@react-three/fiber';
+import { superficial_velocity } from '../../scripts/superficial_velocity';
 
 
 export default function Simulation() {
@@ -10,11 +10,30 @@ export default function Simulation() {
     const [dynamic_viscosity, set_dynamic_viscosity] = useState(0.000155);
     const [density, set_density] = useState(2.05);
     const [pressure_drop, set_pressure_drop] = useState(-100000);
-    const [velocity, set_velocity] = useState("Superficial velocity: 10.85252759898833 m/s");
+    const [velocity, set_velocity] = useState("Change any slider to calculate superficial velocity");
+    const [speed, set_speed] = useState(0.001);
+    const [button, set_button] = useState("Start Simulation");
+    const [clicked, set_clicked] = useState("not_clicked");
 
     function handleVelocity (pressure_drop, packing_diameter, porosity, dynamic_viscosity, density) {
         let v = superficial_velocity(pressure_drop, packing_diameter, porosity, dynamic_viscosity, density);
         set_velocity(v);
+    }
+
+    function handleButton (button) {
+        if (button == "Start Simulation") {
+            set_button("End Simulation");
+        } else {
+            set_button("Start Simulation");
+        }
+    }
+
+    function handleClick (clicked) {
+        if (clicked == "clicked") {
+            set_clicked("not_clicked");
+        } else if (clicked == "not_clicked") {
+            set_clicked("clicked");
+        }
     }
 
     return(
@@ -33,7 +52,7 @@ export default function Simulation() {
                     <br />
                     <p className="label">Packing diameter: </p>
                     <p id="packing_diameter_data" className="label">{packing_diameter}</p>
-                    <p className="label"> m</p>
+                    <p className="label"> nm</p>
                     <br />
                     <input type="range" min="0" max="0.1" value={packing_diameter} className="slider" step="0.001" id="packing_diameter" onChange={(e) => {set_packing_diameter(e.target.value); handleVelocity(pressure_drop, packing_diameter, porosity, dynamic_viscosity, density)}}></input>
                     <br />
@@ -54,10 +73,21 @@ export default function Simulation() {
                     <p className="label"> kg/m*s^2</p>
                     <br />
                     <input type="range" min="-200000" max="0" value={pressure_drop} step="100" className="slider" id="pressure_drop" onChange={(e) => {set_pressure_drop(e.target.value); handleVelocity(pressure_drop, packing_diameter, porosity, dynamic_viscosity, density)}}></input>
+                    <br />
+                    <p className="label">Simulation speed: </p>
+                    <p id="speed" className="label">{speed}</p>
+                    <p className="label"> x</p>
+                    <br />
+                    <input type="range" min="0" max="1" value={speed} step="0.0001" className="slider" id="speed" onChange={(e) => {set_speed(e.target.value)}}></input>
+                    <br />
+                    <button type="button" className={clicked} onClick={(e) => {handleButton(button); handleClick(clicked)}}>{button}</button>
                 </div>
             </div>
             <div className="main">
-                <Canvas className="canvas" diameter={packing_diameter} velocity={velocity}></Canvas>
+                <Canvas className="canvas" diameter={packing_diameter} velocity={velocity} click={clicked} speed={speed}>
+                    <pointLight position={[10, 10, 10]} />
+                    <Box position={[1.2, 0, 0]} />
+                </Canvas>
             </div>
         </div>
     )    

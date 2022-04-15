@@ -1,11 +1,8 @@
-const solve = require("quadratic-equations-solver");
-
-
 function superficial_velocity(pressure_drop, diameter, porosity, viscosity, density) {
     
     const A = 1.75;
-    const B = (150 * (1-porosity) * viscosity) / (density * diameter);
-    const C = (pressure_drop * diameter * (porosity**3)) / (3 * density * (1-porosity));
+    const B = (150 * (1-porosity) * viscosity) / (density * diameter / 1000000000);
+    const C = (pressure_drop * diameter / 1000000000 * (porosity**3)) / (3 / 100000000 * density * (1-porosity));
 
     const X = (-B + Math.sqrt((B**2)-(4*A*C)))/(2*A);
     // (-B + Math.sqrt((B**2)-(4*A*C)))/(2*A);
@@ -20,6 +17,4 @@ function superficial_velocity(pressure_drop, diameter, porosity, viscosity, dens
     }
 }
 
-module.exports = {
-    superficial_velocity
-}
+export {superficial_velocity}

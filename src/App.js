@@ -1,5 +1,5 @@
 import './App.css';
-import Simulation from "./components/Pages/Simulation";
+import Main from "./components/Pages/Main";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
@@ -8,7 +8,7 @@ function App() {
       <>
         <BrowserRouter>
             <Routes>
-                    <Route path="/" element={<Simulation />}/>
+              <Route path="/" element={<Main />}/>
             </Routes>
         </BrowserRouter>
       </>
